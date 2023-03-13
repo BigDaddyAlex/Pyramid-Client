@@ -5,8 +5,13 @@ import axios from 'axios';
 import Auth from './components/Auth';
 import AuthContext from './components/AuthContext';
 import RecordList from "./components/recordList";
+import Edit from "./components/edit";
+import Create from "./components/create";
+import PrivateRoute from "./components/PrivateRoute";
+
 
 let logoutTimer;
+
 
 
 const App = (props) => {
@@ -16,13 +21,15 @@ const App = (props) => {
   const [userId, setUserId] = useState(false);
   const [isLoading, setIsloading] = useState(true)
 
+
+
   const login = useCallback((uid, token, expirationDate) => {
     setToken(token);
     setUserId(uid);
     setIsloading(false)
-    const tokenExpirationDate =
-      expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
+    const tokenExpirationDate = expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
     setTokenExpirationDate(tokenExpirationDate);
+
     localStorage.setItem(
       'userData',
       JSON.stringify({
@@ -80,8 +87,12 @@ const App = (props) => {
       <div className="App">
         <Navbar />
         <Routes>
-          <Route path="/auth" element={<Auth />} exact />
-          <Route path="/" element={<RecordList />} exact />
+          <Route path="/auth" element={<Auth />} />
+          <Route exact path='/' element={<PrivateRoute />}>
+            <Route path="/" element={<RecordList />} />
+          </Route>
+          <Route path="/edit/:id" element={<Edit />} />
+          <Route path="/create" element={<Create />} />
         </Routes>
       </div>
     </AuthContext.Provider>

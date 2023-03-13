@@ -3,17 +3,20 @@ import React, { Component } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import AuthContext from './AuthContext';
 
+
 function withRouter(Component) {
     function ComponentWithRouterProp(props) {
       let location = useLocation();
       let navigate = useNavigate();
       let params = useParams();
+      let history = {};
+
       return (
             <Component
               {...props}
               location={location}
               params={params}
-              navigate={navigate}
+              navigate={navigate}              
             />
       );
     }
@@ -71,36 +74,36 @@ export class Auth extends Component {
     }
     
 
-
+    
     mySubmitHandler = (event) => {
+        
         this.setState(pre => ({
             isloading: true
         }))
-        const auth = this.context
+        const auth = this.context;
         event.preventDefault();
 
-        // if (validateForm(this.state.errors)) {
-        // } else {
-        // }
+
         if (this.state.isLoginMode) {
             Axios.post('http://localhost:1050/user/login', this.state.user)
                 .then(response => {
                     this.setState(pre => ({
                         isloading: false
                     }))
-                    this.props.history.push('/')
+                
+                    this.props.navigate('/')
+                    
                     auth.login(response.data.userId, response.data.token);
-                }).catch(e => {
-                   
-                })
 
+                }).catch(e => {
+                   console.log(e);
+                })
         }
         else {
             this.setState(pre => ({
                 isloading: true
             }))
             Axios.post('http://localhost:1050/user/signup', this.state.user).then(response => {
-                console.log("react request");
                 this.setState(pre => ({
                     isloading: false
                 }))
@@ -112,6 +115,9 @@ export class Auth extends Component {
         this.setState({
             user: { ...this.state.user, email: '', password: '' }
         });
+        
+
+        
     }
 
 
