@@ -21,6 +21,7 @@ const Record = (props) => (
 );
  
 export default function RecordList() {
+  console.log("haha")
  const [records, setRecords] = useState([]);
  const cxt = useContext(AuthContext)
 

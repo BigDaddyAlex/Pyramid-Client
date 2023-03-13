@@ -89,7 +89,7 @@ const App = (props) => {
         <Routes>
           <Route path="/auth" element={<Auth />} />
           <Route exact path='/' element={<PrivateRoute />}>
-            <Route path="/" element={<RecordList />} />
+            <Route path="/recordlist" element={<RecordList />} />
           </Route>
           <Route path="/edit/:id" element={<Edit />} />
           <Route path="/create" element={<Create />} />
