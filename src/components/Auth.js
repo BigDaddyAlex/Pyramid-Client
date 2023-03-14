@@ -90,7 +90,7 @@ export class Auth extends Component {
                     this.setState(pre => ({
                         isloading: false
                     }))
-                    auth.login(response.data.userId, response.data.token);
+                    auth.login(response.data.email, response.data.token);
                 
                     this.props.navigate('/')
                     

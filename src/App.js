@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useContext } from "react";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/navbar";
 import axios from 'axios';
@@ -9,23 +9,20 @@ import Edit from "./components/edit";
 import Create from "./components/create";
 import PrivateRoute from "./components/PrivateRoute";
 
-
 let logoutTimer;
 
+const App = () => {
 
+  const userData = JSON.parse(localStorage.getItem("userData"));
 
-const App = (props) => {
-
-  const [token, setToken] = useState(false);
+  const [token, setToken] = useState(userData);
   const [tokenExpirationDate, setTokenExpirationDate] = useState();
-  const [userId, setUserId] = useState(false);
+  const [email, setEmail] = useState(userData ? userData["email"] : null);
   const [isLoading, setIsloading] = useState(true)
 
-
-
-  const login = useCallback((uid, token, expirationDate) => {
+  const login = useCallback((email, token, expirationDate) => {
     setToken(token);
-    setUserId(uid);
+    setEmail(email);
     setIsloading(false)
     const tokenExpirationDate = expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
     setTokenExpirationDate(tokenExpirationDate);
@@ -33,7 +30,7 @@ const App = (props) => {
     localStorage.setItem(
       'userData',
       JSON.stringify({
-        userId: uid,
+        email: email,
         token: token,
         expiration: tokenExpirationDate.toISOString()
       })
@@ -45,7 +42,7 @@ const App = (props) => {
   const logout = useCallback(() => {
     setToken(null);
     setTokenExpirationDate(null);
-    setUserId(null);
+    setEmail(null);
     localStorage.removeItem('userData');
     localStorage.removeItem('profileData');
     let token = null
@@ -70,7 +67,7 @@ const App = (props) => {
       storedData.token &&
       new Date(storedData.expiration) > new Date()
     ) {
-      login(storedData.userId, storedData.token, new Date(storedData.expiration));
+      login(storedData.email, storedData.token, new Date(storedData.expiration));
     }
   }, [login]);
 
@@ -79,7 +76,7 @@ const App = (props) => {
       value={{
         isLoggedIn: !!token,
         token: token,
-        userId: userId,
+        email: email,
         login: login,
         logout: logout
       }}
@@ -89,9 +86,9 @@ const App = (props) => {
         <Routes>
           <Route path="/auth" element={<Auth />} />
           <Route exact path='/' element={<PrivateRoute />}>
-            <Route path="/recordlist" element={<RecordList />} />
           </Route>
           <Route path="/edit/:id" element={<Edit />} />
+          <Route path="/home" element={<RecordList />} />
           <Route path="/create" element={<Create />} />
         </Routes>
       </div>

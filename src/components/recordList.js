@@ -1,94 +1,101 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "./AuthContext";
- 
-const Record = (props) => (
- <tr>
-   <td>{props.record.name}</td>
-   <td>{props.record.position}</td>
-   <td>{props.record.level}</td>
-   <td>
-     <Link className="btn btn-link" to={`/edit/${props.record._id}`}>Edit</Link> |
-     <button className="btn btn-link"
-       onClick={() => {
-         props.deleteRecord(props.record._id);
-       }}
-     >
-       Delete
-     </button>
-   </td>
- </tr>
-);
- 
-export default function RecordList() {
-  console.log("haha")
- const [records, setRecords] = useState([]);
- const cxt = useContext(AuthContext)
 
- // This method fetches the records from the database.
- useEffect(() => {
-   async function getRecords() {
-     const response = await fetch(`http://localhost:1050/record/`);
-     
-     if (!response.ok) {
-       const message = `An error occurred: ${response.statusText}`;
-       window.alert(message);
-       return;
-     }
- 
-     const records = await response.json();
-     setRecords(records);
-   }
- 
-   getRecords();
-   
-   return;
- }, [records.length]);
- 
- // This method will delete a record
- async function deleteRecord(id) {
-   await fetch(`http://localhost:1050/${id}`, {
-     method: "DELETE"
-   });
- 
-   const newRecords = records.filter((el) => el._id !== id);
-   setRecords(newRecords);
- }
- 
- // This method will map out the records on the table
- function recordList() {
-   return records.map((record) => {
-     return (
-       <Record
-         record={record}
-         deleteRecord={() => deleteRecord(record._id)}
-         key={record._id}
-       />
-     );
-   });
- }
- 
- // This following section will display the table with the records of individuals.
-
- if(cxt.isLoggedIn) {
+const Record = (props) => {
+  
   return (
-    <div>
-      <h3>Record List</h3>
-      <table className="table table-striped" style={{ marginTop: 20 }}>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Position</th>
-            <th>Level</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>{recordList()}</tbody>
-      </table>
-    </div>
-  );
- } else {
-  return 
- }
- 
+  <tr>
+    <td>{props.field}</td>
+    <td>{props.value}</td>
+    <td>
+      <Link className="btn btn-link" to={`/edit/${props.field}`}>Edit</Link> |
+      <button className="btn btn-link"
+        onClick={() => {
+          props.deleteRecord(props.record._id);
+        }}
+      >
+        Delete
+      </button>
+    </td>
+  </tr>
+)};
+
+export default function RecordList() {
+  const [records, setRecords] = useState([]);
+  const cxt = useContext(AuthContext);
+  let email = cxt.email
+
+
+  useEffect(() => {
+    
+    async function getRecords() {
+      const response = await fetch(`http://localhost:1050/record`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email
+        })
+      });
+
+      if (!response.ok) {
+        const message = `An error occurred: ${response.statusText}`;
+        window.alert(message);
+        return;
+      }
+      console.log(response)
+      const records = await response.json();
+      
+      setRecords(records);
+    }
+
+    
+    getRecords(cxt.email);
+
+    return;
+  }, [records.length]);
+
+  async function deleteRecord(id) {
+    await fetch(`http://localhost:1050/${id}`, {
+      method: "DELETE"
+    });
+
+    const newRecords = records.filter((el) => el._id !== id);
+    setRecords(newRecords);
+  }
+
+  function getRecordList() {
+    return Object
+      .keys(records)
+      .filter((key) => key != "password" && key != "_id")
+      .map(function(key) {
+      return  (<Record
+        field = {key}
+        value = {records[key]}
+      />)
+      
+    })
+  }
+
+  if (cxt.isLoggedIn && cxt.email !== 'undefined') {
+    return (
+      <div>
+        <h3>Data</h3>
+        <table className="table table-striped" style={{ marginTop: 20 }}>
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>{getRecordList()}</tbody>
+        </table>
+      </div>
+    );
+  } else {
+    return
+  }
+
 }
