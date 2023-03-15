@@ -1,8 +1,6 @@
 import React, { useContext } from 'react';
 import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
-
 import "bootstrap/dist/css/bootstrap.css";
-
 import AuthContext from './AuthContext';
 
 function withRouter(Component) {
@@ -12,12 +10,12 @@ function withRouter(Component) {
     let params = useParams();
 
     return (
-          <Component
-            {...props}
-            location={location}
-            params={params}
-            navigate={navigate}              
-          />
+      <Component
+        {...props}
+        location={location}
+        params={params}
+        navigate={navigate}
+      />
     );
   }
   return ComponentWithRouterProp;
@@ -30,31 +28,25 @@ const Navbar = (props) => {
 
     cxt.logout()
     event.preventDefault();
-    
+
     props.navigate('/auth')
   }
 
-    var hw = cxt.isLoggedIn ? "Logged in" : "Logged out"
-    console.log(hw)
-    return (
-      <div>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <NavLink className="navbar-brand" to="/">
-            Pyramid
-          </NavLink>
-     
-         
-          <NavLink className="nav-link" to="/create">
-            Create Record
-          </NavLink>
-          <NavLink onClick={MyClickHandler} className="nav-link">
-            {hw}
-          </NavLink>
-  
-        </nav>
-      </div>
-    );
-  }
+  var hw = cxt.isLoggedIn ? "Logged in as " + cxt.email: "Logged out"
+  return (
+    <div>
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <NavLink className="navbar-brand" to="/">
+          Pyramid
+        </NavLink>
+        <NavLink onClick={MyClickHandler} className="nav-link">
+          {hw}
+        </NavLink>
+
+      </nav>
+    </div>
+  );
+}
 
 
 export default withRouter(Navbar);

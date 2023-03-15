@@ -6,13 +6,14 @@ const Record = (props) => {
 
   return (
     <tr>
-      <td>{props.field}</td>
-      <td>{props.value}</td>
+      <td>{props.id}</td>
+      <td>{props.requestDate}</td>
+      <td>{props.data}</td>
       <td>
         <Link className="btn btn-link" to={`edit`}>Edit</Link> |
         <button className="btn btn-link"
           onClick={() => {
-            props.deleteRecord(props.field);
+            // props.deleteRecord(props.field);
           }}
         >
           x
@@ -23,14 +24,15 @@ const Record = (props) => {
 };
 
 export default function RecordList() {
-  const [records, setRecords] = useState({});
+  const [records, setRecords] = useState([]);
   const [deleteEvent, setDeleteEvent] = useState(false);
 
   const cxt = useContext(AuthContext);
   let email = cxt.email
+  
 
   async function getRecordsFromMongo() {
-    const response = await fetch(`http://localhost:1050/record`, {
+    const response = await fetch(`http://localhost:1050/requests`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -69,37 +71,37 @@ export default function RecordList() {
   }
 
   function getRecordList() {
-    return Object
-      .keys(records)
-      .filter((key) => key != "password")
-      .map(function (key) {
-        return (<Record
-          field={key}
-          key = {key}
-          value={records[key]}
-          deleteRecord={(fieldName) => deleteRecord(fieldName)}
-        />)
-
-      })
+    return records
+      .map((record) => {
+        return (
+          <Record
+            id={record.requestee}
+            key={record.requestee}
+            requestDate={record.requestDate}
+            data={JSON.stringify(record.fields)}
+          />
+        );
+      });
   }
 
   if (cxt.isLoggedIn && cxt.email !== 'undefined') {
-
     return (
       <div>
         <table className="table table-striped" style={{ marginTop: 20 }}>
           <thead>
             <tr>
-              <th>Field</th>
-              <th>Value</th>
+              <th>Recipient</th>
+              <th>Create Date</th>
+              <th>Data</th>
+              <th>OPS</th>
             </tr>
           </thead>
           <tbody>
             {getRecordList()}
           </tbody>
         </table>
-        <button><Link className="nav-link" to="create">
-          Create Record
+        <button><Link className="nav-link" to="newrequest">
+          New
         </Link></button>
 
       </div>

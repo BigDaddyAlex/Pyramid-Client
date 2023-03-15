@@ -6,7 +6,7 @@ import AuthContext from "./AuthContext";
 const PrivateRoute = () => {
     const cxt = useContext(AuthContext)
     const auth = cxt.isLoggedIn; 
-    return auth ? <Navigate to="/home" /> : <Navigate to="/auth" />;
+    return auth ? <Navigate to="/data" /> : <Navigate to="/auth" />;
 }
 
 export default PrivateRoute

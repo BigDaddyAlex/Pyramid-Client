@@ -8,6 +8,9 @@ import RecordList from "./components/recordList";
 import Edit from "./components/edit";
 import Create from "./components/create";
 import PrivateRoute from "./components/PrivateRoute";
+import ReactTabs from "./components/ReactTabs";
+
+
 
 let logoutTimer;
 
@@ -84,12 +87,14 @@ const App = () => {
       <div className="App">
         <Navbar />
         <Routes>
-          <Route path="/auth" element={<Auth />} />
-          <Route exact path='/' element={<PrivateRoute />}>
+          <Route path="auth" element={<Auth />} />
+          <Route path='' element={<PrivateRoute />}></Route>
+          <Route path="data" element={<ReactTabs />} >
+            <Route path=''></Route>
+            <Route path='edit'></Route>
+            <Route path='create'></Route>
+            <Route path='newrequest'></Route>
           </Route>
-          <Route path="/edit/:field" element={<Edit />} />
-          <Route path="/home" element={<RecordList />} />
-          <Route path="/create" element={<Create />} />
         </Routes>
       </div>
     </AuthContext.Provider>

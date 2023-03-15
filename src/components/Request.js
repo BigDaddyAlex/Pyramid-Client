@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import AuthContext from './AuthContext';
 
 
-export default function Create() {
+export default function Request() {
   const cxt = useContext(AuthContext)
   const [form, setForm] = useState({
     _id: cxt.email,
@@ -20,8 +20,7 @@ export default function Create() {
   }
 
   async function onSubmit(e) {
-    e.preventDefault();
-    
+    e.preventDefault(); 
     const record = { ...form };
 
 
@@ -43,10 +42,10 @@ export default function Create() {
 
   return (
     <div>
-      <h3>Create New Record</h3>
+      <h3>Create New Request</h3>
       <form onSubmit={onSubmit}>
         <div className="form-group">
-          <label htmlFor="field">Field</label>
+          <label htmlFor="field">Email</label>
           <input
             type="text"
             className="form-control"
@@ -56,7 +55,7 @@ export default function Create() {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="value">Value</label>
+          <label htmlFor="value">Requested: First Name</label>
           <input
             type="text"
             className="form-control"
@@ -65,6 +64,7 @@ export default function Create() {
             onChange={(e) => updateForm({ value: e.target.value })}
           />
         </div>
+        <button>Add</button>
 
 
         <div className="form-group">
@@ -73,6 +73,10 @@ export default function Create() {
             value="Create record"
             className="btn btn-primary"
           />
+        </div>
+       
+        <div className="form-group">
+          
         </div>
       </form>
     </div>
