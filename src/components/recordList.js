@@ -3,81 +3,93 @@ import { Link } from "react-router-dom";
 import AuthContext from "./AuthContext";
 
 const Record = (props) => {
-  
+
   return (
-  <tr>
-    <td>{props.field}</td>
-    <td>{props.value}</td>
-    <td>
-      <Link className="btn btn-link" to={`/edit/${props.field}`}>Edit</Link> |
-      <button className="btn btn-link"
-        onClick={() => {
-          props.deleteRecord(props.record._id);
-        }}
-      >
-        Delete
-      </button>
-    </td>
-  </tr>
-)};
+    <tr>
+      <td>{props.field}</td>
+      <td>{props.value}</td>
+      <td>
+        <Link className="btn btn-link" to={`/edit/${props.field}`}>Edit</Link> |
+        <button className="btn btn-link"
+          onClick={() => {
+            props.deleteRecord(props.record._id);
+          }}
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
+  )
+};
 
 export default function RecordList() {
-  const [records, setRecords] = useState([]);
+  const [records, setRecords] = useState({s:"asdf"});
   const cxt = useContext(AuthContext);
   let email = cxt.email
 
 
-  useEffect(() => {
-    
-    async function getRecords() {
-      const response = await fetch(`http://localhost:1050/record`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email
-        })
-      });
 
-      if (!response.ok) {
-        const message = `An error occurred: ${response.statusText}`;
-        window.alert(message);
-        return;
-      }
-      console.log(response)
-      const records = await response.json();
-      
-      setRecords(records);
+  async function getRecordsFromMongo() {
+    console.log("email -> " + email)
+    
+    
+    const response = await fetch(`http://localhost:1050/record`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        _id: email
+      })
+    });
+    if (!response.ok) {
+      const message = `An error occurred: ${response.statusText}`;
+      window.alert(message);
+      return;
     }
 
-    
-    getRecords(cxt.email);
+    // console.log(response)
+    const records = await response.json();
 
-    return;
-  }, [records.length]);
-
-  async function deleteRecord(id) {
-    await fetch(`http://localhost:1050/${id}`, {
-      method: "DELETE"
-    });
-
-    const newRecords = records.filter((el) => el._id !== id);
-    setRecords(newRecords);
+    if(records) {
+      console.log("records -> " + records )
+    }
+    // console.log("ssdadfs")
+    // console.log(records)
+    setRecords(records);
   }
 
-  function getRecordList() {
-    return Object
+  useEffect(() => {
+    getRecordsFromMongo()
+    
+    // getRecords(cxt.email);
+
+    return;
+  }, []);
+
+  // async function deleteRecord(id) {
+  //   await fetch(`http://localhost:1050/${id}`, {
+  //     method: "DELETE"
+  //   });
+
+  //   const newRecords = records.filter((el) => el._id !== id);
+  //   setRecords(newRecords);
+  // }
+
+   function getRecordList() {
+      return Object
       .keys(records)
-      .filter((key) => key != "password" && key != "_id")
+      .filter((key) => key != "password")
       .map(function(key) {
       return  (<Record
         field = {key}
         value = {records[key]}
       />)
-      
+
     })
   }
+
+
 
   if (cxt.isLoggedIn && cxt.email !== 'undefined') {
     return (
@@ -90,7 +102,9 @@ export default function RecordList() {
               <th>Value</th>
             </tr>
           </thead>
-          <tbody>{getRecordList()}</tbody>
+          <tbody>
+            {getRecordList()}
+          </tbody>
         </table>
       </div>
     );

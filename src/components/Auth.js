@@ -90,12 +90,10 @@ export class Auth extends Component {
                     this.setState(pre => ({
                         isloading: false
                     }))
-                    auth.login(response.data.email, response.data.token);
-                
+                    console.log("hahaha: " + response.data.email)
+                    console.log(response)
+                    auth.login(response.data._id, response.data.token);
                     this.props.navigate('/')
-                    
-                    
-
                 }).catch(e => {
                    console.log(e);
                 })
@@ -105,7 +103,7 @@ export class Auth extends Component {
                 isloading: true
             }))
             Axios.post('http://localhost:1050/user/signup', this.state.user).then(response => {
-                this.setState(pre => ({
+                this.setState(pre => ({  
                     isloading: false
                 }))
             })

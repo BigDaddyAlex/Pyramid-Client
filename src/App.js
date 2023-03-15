@@ -87,7 +87,7 @@ const App = () => {
           <Route path="/auth" element={<Auth />} />
           <Route exact path='/' element={<PrivateRoute />}>
           </Route>
-          <Route path="/edit/:id" element={<Edit />} />
+          <Route path="/edit/:field" element={<Edit />} />
           <Route path="/home" element={<RecordList />} />
           <Route path="/create" element={<Create />} />
         </Routes>
