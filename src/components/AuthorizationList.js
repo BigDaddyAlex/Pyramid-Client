@@ -4,13 +4,40 @@ import AuthContext from "./AuthContext";
 
 const Record = (props) => {
 
+  const [authEvent, setAuthEvent] = useState(false);
+
+  useEffect(() => {
+    return;
+  }, [authEvent]);
+
+  async function approveAll(data1, request_id) {
+    Object
+      .keys(data1)
+      .forEach((key) => {
+        data1[key] = 1
+      })
+
+    await fetch(`http://localhost:1050/updateRequest`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "id": request_id,
+        field: "fields",
+        value: data1
+      }),
+    });
+    setAuthEvent(!authEvent)
+
+  }
   return (
     <tr>
       <td>{props.id}</td>
       <td>{props.requestDate}</td>
-      <td>{props.data}</td>
+      <td>{JSON.stringify(props.data)}</td>
       <td>
-        <Link className="btn btn-link" onClick={props.approveAll}>Approve all</Link> 
+        <Link className="btn btn-link" onClick={() => approveAll(props.data, props.request_id)}>Approve all</Link>
         <Link className="btn btn-link" to={`edit`}>Select to approve</Link>
       </td>
     </tr>
@@ -20,7 +47,6 @@ const Record = (props) => {
 export default function AuthorizationList() {
   const [records, setRecords] = useState([]);
   const [deleteEvent, setDeleteEvent] = useState(false);
-
   const cxt = useContext(AuthContext);
   let email = cxt.email
 
@@ -47,36 +73,7 @@ export default function AuthorizationList() {
   useEffect(() => {
     getRecordsFromMongo()
     return;
-  }, [deleteEvent]);
-  
-  //TODO
-  async function approveAll(){
-    // await fetch(`http://localhost:1050/delete`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     _id: cxt.email,
-    //     field: fieldName
-    //   }),
-    // });
-
-  }
-
-  async function deleteRecord(fieldName) {
-    await fetch(`http://localhost:1050/delete`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        _id: cxt.email,
-        field: fieldName
-      }),
-    });
-    setDeleteEvent(!deleteEvent)
-  }
+  }, []);
 
   function getRecordList() {
     return records
@@ -84,10 +81,10 @@ export default function AuthorizationList() {
         return (
           <Record
             id={record.requestee}
-            key = {record.requestee}
+            request_id={record._id}
+            key={record.requestee}
             requestDate={record.requestDate}
-            data={JSON.stringify(record.fields)}
-            approveAll={() => approveAll()}
+            data={record.fields}
           />
         );
       });
@@ -102,14 +99,14 @@ export default function AuthorizationList() {
               <th>Sender</th>
               <th>Create Date</th>
               <th>Data</th>
-              <th>OPS</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {getRecordList()}
           </tbody>
         </table>
-    
+
 
       </div>
     );

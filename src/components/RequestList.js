@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "./AuthContext";
+import Request from "./Request";
+
 
 const Record = (props) => {
 
@@ -10,7 +12,6 @@ const Record = (props) => {
       <td>{props.requestDate}</td>
       <td>{props.data}</td>
       <td>
-        <Link className="btn btn-link" to={`edit`}>Edit</Link> |
         <button className="btn btn-link"
           onClick={() => {
             // props.deleteRecord(props.field);
@@ -29,7 +30,7 @@ export default function RecordList() {
 
   const cxt = useContext(AuthContext);
   let email = cxt.email
-  
+
 
   async function getRecordsFromMongo() {
     const response = await fetch(`http://localhost:1050/requests`, {
@@ -84,6 +85,8 @@ export default function RecordList() {
       });
   }
 
+  // 
+
   if (cxt.isLoggedIn && cxt.email !== 'undefined') {
     return (
       <div>
@@ -93,16 +96,19 @@ export default function RecordList() {
               <th>Recipient</th>
               <th>Create Date</th>
               <th>Data</th>
-              <th>OPS</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
             {getRecordList()}
           </tbody>
         </table>
-        <button><Link className="nav-link" to="newrequest">
-          New
-        </Link></button>
+        <button>
+          <Link className="nav-link" to="newrequest">
+            New
+          </Link>
+        </button>
+        <div><Request emails={records.map(record=>record.requestee)}/></div>
 
       </div>
     );
