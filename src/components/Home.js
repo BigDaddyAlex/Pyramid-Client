@@ -27,7 +27,7 @@ function Home() {
         </div>
       </div>
       <div className='row'>
-        <h3 className='text-white'>Check out some of the most popular templates below</h3>
+        <h5 className='text-white'>Check out some of the most popular templates below</h5>
         <HomeCard title='Patient Intake' description='A form that hospitals use to register new patients' />
         <HomeCard title='Insurance claim' description='A form insurance companies use to collect data about claims' />
         <HomeCard title='Library Membership Registration' description='A form libraries use to register new members' />
