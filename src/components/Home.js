@@ -18,7 +18,7 @@ function Home() {
       <div className=" d-flex align-items-center " style={{ height: "85vh" }}>
         <span className="text-center">
           <div class="row text-white">
-            <h1>A place for you to outsource your work</h1>
+            <h1>A place to outsource your work</h1>
           </div>
         </span>
       </div>
