@@ -14,6 +14,7 @@ import LoginPage from './components/LoginPage';
 import SignupPage from './components/SignupPage';
 import VerifySignup from './components/VerifySignup';
 import Search from './components/Search';
+import HomeCard from './components/HomeCard.tsx';
 
 
 let logoutTimer;
@@ -90,17 +91,22 @@ const App = () => {
     >
       <div className="App bg-black" style={{ height: 999 }}>
         <Navbar />
-        <Routes>
-          <Route path="" element={<PrivateRoute />}></Route>
-          <Route path="home" element={<Home />} />
-          <Route path="creator" element={<Creator />} />
-          <Route path="Contact" element={<ContactPage />} />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="signup" element={<SignupPage />} />
-          <Route path="verify/*" element={<VerifySignup />} />
-          <Route path="dashboard/*" element={<Dashboard />} />
-          <Route path="search/*" element={<Search />} />
-        </Routes>
+        <div className='p-5'>
+          
+          <Routes>
+            <Route path="" element={<PrivateRoute />}></Route>
+            <Route path="home" element={<Home />} />
+            <Route path="creator" element={<Creator />} />
+            <Route path="Contact" element={<ContactPage />} />
+            <Route path="login" element={<LoginPage />} />
+            <Route path="signup" element={<SignupPage />} />
+            <Route path="verify/*" element={<VerifySignup />} />
+            <Route path="dashboard/*" element={<Dashboard />} />
+            <Route path="search/*" element={<Search />} />
+          </Routes>
+        </div>
+
+
       </div>
     </AuthContext.Provider>
   );
