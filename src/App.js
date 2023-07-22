@@ -17,6 +17,7 @@ import Search from './components/Search';
 import HomeCard from './components/HomeCard.tsx';
 
 
+
 let logoutTimer;
 
 const App = () => {

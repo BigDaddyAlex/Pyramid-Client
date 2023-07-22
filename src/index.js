@@ -3,6 +3,11 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { createRoot } from 'react-dom/client';
+import { Amplify, API } from 'aws-amplify';
+
+import awsconfig from './aws-exports';
+Amplify.configure(awsconfig);
+
 
 const axios = require('axios').default;
 
