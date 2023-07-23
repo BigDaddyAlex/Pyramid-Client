@@ -18,9 +18,6 @@ function getData() {
   return API.get(apiName, path, myInit);
 }
 
-(async function() {
-  const response = await getData();
-})();
 
 const ContactPage = () => {
   const cxt = useContext(AuthContext)
