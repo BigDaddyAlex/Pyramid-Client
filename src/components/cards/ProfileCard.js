@@ -25,7 +25,7 @@ export default function ProfileCard(props) {
     if (props.field !== '_id') {
         return (
             <div className="p-1">
-                <div key={props.id} className="card " style={{ width: "100%" }}>
+                <div key={props.id} className="card bg-dark text-white" style={{ width: "100%" }}>
                     <div className="card-body row">
                         <div key="id" className="w-50 text-start col-sm">{props.field}</div>
                         <div key="date" className="w-10 text-end col-sm">{props.value}</div>
@@ -43,7 +43,7 @@ export default function ProfileCard(props) {
     } else {
         return (
             <div className="p-1">
-                <div key={props.id} className="card " style={{ width: "100%" }}>
+                <div key={props.id} className="card bg-dark text-white" style={{ width: "100%" }}>
                     <div className="card-body row">
                         <div key="id" className="w-50 text-start col-sm">{props.field}</div>
                         <div key="date" className="w-10 text-end col-sm">{props.value}</div>

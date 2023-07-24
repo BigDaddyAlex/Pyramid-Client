@@ -1,11 +1,9 @@
 import React, { useContext, useState } from "react";
-import AuthContext from './AuthContext';
 import NewfuzzySearch from '../utils/NewFuzzySearch'
 
 
 export default function Request(props) {
 
-  const cxt = useContext(AuthContext)
   const [recipient, setRecipient] = useState("");
 
   async function onSubmit(e) {
@@ -23,7 +21,7 @@ export default function Request(props) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          sender: cxt.email,
+          sender: props.email,
           recipient: recipient,
           fields: fields
         }

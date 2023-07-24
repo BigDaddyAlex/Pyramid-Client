@@ -1,11 +1,9 @@
 import React, { useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router";
-import AuthContext from './AuthContext';
 
-export default function Edit() {
-  const cxt = useContext(AuthContext)
+export default function Edit(props) {
   const [form, setForm] = useState({
-    _id: cxt.email,
+    _id: props.email,
     field: "",
     value: "",
   });

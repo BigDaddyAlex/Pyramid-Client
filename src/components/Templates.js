@@ -32,7 +32,7 @@ export default function Templates(props) {
       .map((template, idx) => {
         return (
           <div className="p-1" key={idx}>
-            <div className="card p-2" key={template._id} style={{ width: "100%" }}>
+            <div className="card p-2 bg-dark text-white" key={template._id} style={{ width: "100%" }}>
               <div className="card-body row" >
                 <div className="col-sm">
                   {template.pubilcName}

@@ -1,18 +1,10 @@
 import React,  { useEffect, useContext } from 'react';
 import Main from './Main';
 import { useNavigate } from 'react-router-dom';
-import AuthContext from '../AuthContext';
 import { Amplify, API } from 'aws-amplify';
 
 const ContactPage = () => {
-  const cxt = useContext(AuthContext)
   let navigate = useNavigate();
-
-  useEffect(() => {
-    if(cxt.isLoggedIn)
-    navigate('/dashboard')
-    return;
-  }, [cxt.isLoggedIn]);
 
   return (
     <div className=" d-flex justify-content-center ">

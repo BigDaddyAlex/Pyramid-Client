@@ -1,13 +1,11 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router";
-import AuthContext from './AuthContext';
 import NewfuzzySearch from '../utils/NewFuzzySearch'
 
 
 export default function Create(props) {
-  const cxt = useContext(AuthContext)
   const [form, setForm] = useState({
-    _id: cxt.email,
+    _id: props.email,
     field: "",
     value: "",
   });

@@ -1,21 +1,15 @@
-import React, { useEffect, useContext } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import AuthContext from './AuthContext';
-import HomeCard from './HomeCard.tsx'
+import HomeCard from './cards/HomeCard.tsx'
+import Navbar from './navbar.tsx';
 
 function Home() {
 
-  const cxt = useContext(AuthContext)
   let navigate = useNavigate();
-
-  useEffect(() => {
-    if (cxt.isLoggedIn)
-      navigate('/dashboard')
-    return;
-  }, [cxt.isLoggedIn]);
 
   return (
     <div>
+      <Navbar />
       <div className=" d-flex justify-content-center">
         <div className=" d-flex align-items-center " style={{ height: "40vh" }}>
           <span className="text-center">

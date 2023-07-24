@@ -1,6 +1,4 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Link } from "react-router-dom";
-import AuthContext from "./AuthContext";
 import ProfileCard from "./cards/ProfileCard";
 import Create from "../components/create";
 import Edit from "./edit";

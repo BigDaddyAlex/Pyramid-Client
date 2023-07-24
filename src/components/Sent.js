@@ -81,7 +81,7 @@ export default function Sent(props) {
   } else {
     return (
       <div><Request emails={records.map(record => record.requestee)} fieldSearchList={props.fieldSearchList}
-        onChange={requestChangeHandler} />
+        onChange={requestChangeHandler} email={props.email}/>
       </div>
     )
   }

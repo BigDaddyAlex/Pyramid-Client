@@ -44,7 +44,7 @@ export default function Dashboard(props) {
   }
 
   function getClassName(activeTabTarget) {
-    return activeTab === activeTabTarget ? 'bg-secondary text-white list-group-item' : 'list-group-item'
+    return activeTab === activeTabTarget ? 'bg-secondary text-white list-group-item ' : 'list-group-item text-white bg-black'
   }
 
   function getRightSide() {
@@ -58,16 +58,15 @@ export default function Dashboard(props) {
       case 'templates':
         return (<Templates profileData={profileData} email={props.email} fieldSearchList={fieldSearchList}/>)
     }
-
   }
 
   return (
-    <div className="bg-light d-flex " style={{ minHeight: "90vh" }}>
+    <div className="bg-black d-flex " style={{ minHeight: "90vh" }}>
       <div className="mt-2" style={{ width: "250px" }}>
         <header>
-          <nav className=" d-lg-block bg-light">
+          <nav className=" d-lg-block">
             <div className="position-sticky">
-              <div className="list-group bg-light">
+              <div className="list-group bg-black">
                 <div className={getClassName('inbox')} onClick={() => setActiveTab('inbox')}>Inbox </div>
                 <div className={getClassName('sent')} onClick={() => setActiveTab('sent')}>Sent</div>
                 <div className={getClassName('profile')} onClick={() => setActiveTab('profile')}>Profile</div>

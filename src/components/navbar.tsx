@@ -1,7 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { NavLink, useLocation, useParams, useNavigate } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.css";
-import AuthContext from './AuthContext';
+import { Amplify } from 'aws-amplify';
+import awsExports from '../aws-exports';
+import { WithAuthenticatorProps } from '@aws-amplify/ui-react';
+
+Amplify.configure(awsExports);
+
 
 function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -19,18 +24,12 @@ function withRouter(Component) {
   return ComponentWithRouterProp;
 }
 
-const Navbar = (props) => {
-  const cxt = useContext(AuthContext)
+const Navbar = ({signOut}: WithAuthenticatorProps) => {
   const [modal, setModal] = useState(false);
   let navigate = useNavigate();
 
   const ModalHandler = () => {
-    if (cxt.isLoggedIn) {
-      cxt.logout()
-
-    } else {
-      navigate('auth')
-    }
+    navigate("auth")
   }
 
   return (
@@ -50,8 +49,9 @@ const Navbar = (props) => {
         </NavLink>
         
         <button className="text-dark btn btn-light btn-sm " onClick={ModalHandler} >
-          {cxt.isLoggedIn ? "Log out" : "Log in"}
+          Log in
         </button>
+        <button onClick={signOut}>Sign out</button>
       </nav>
     </div>
   );

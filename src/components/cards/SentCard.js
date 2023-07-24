@@ -19,7 +19,7 @@ export default function InboxCard(props) {
 
     return (
         <div className="p-1">
-            <div key={props.id} className="card " style={{ width: "100%" }}>
+            <div key={props.id} className="card bg-dark text-white" style={{ width: "100%" }}>
                 <div className="p-3 row">
                     <div key="id" className=" text-start col-sm" style={{width: "400px"}}>{props.id }</div>
                     <div key="date" className="w-10 text-end col-sm">{props.requestDate}</div>

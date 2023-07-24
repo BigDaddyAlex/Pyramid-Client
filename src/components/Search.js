@@ -1,18 +1,16 @@
 import React, { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AuthContext from './AuthContext';
 import MainSearch from '../utils/MainSearch';
 
-function Home() {
+function Search(props) {
 
-  const cxt = useContext(AuthContext)
   let navigate = useNavigate();
 
   useEffect(() => {
-    if(cxt.isLoggedIn)
+    if(props.isLoggedIn)
     navigate('/dashboard')
     return;
-  }, [cxt.isLoggedIn]);
+  }, [props.isLoggedIn]);
 
   return (
     <div className=" d-flex justify-content-center ">
@@ -27,4 +25,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Search;
