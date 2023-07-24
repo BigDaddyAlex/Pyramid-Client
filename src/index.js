@@ -5,10 +5,6 @@ import { BrowserRouter } from "react-router-dom";
 import { createRoot } from 'react-dom/client';
 import { Amplify, API } from 'aws-amplify';
 
-import awsconfig from './aws-exports';
-Amplify.configure(awsconfig);
-
-
 const axios = require('axios').default;
 
 axios.baseURL = process.env.REACT_APP_API_URL + '';

@@ -9,7 +9,6 @@ import Edit from "./edit";
 export default function Profile(props) {
   const [records, setRecords] = useState({});
   const [deleteEvent, setDeleteEvent] = useState(false);
-  const cxt = useContext(AuthContext);
   const [subPage, setSubPage] = useState("profile")
 
   useEffect(() => {
@@ -24,7 +23,7 @@ export default function Profile(props) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        _id: cxt.email,
+        _id: props.email,
         field: fieldName
       }),
     });

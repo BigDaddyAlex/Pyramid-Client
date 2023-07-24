@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from "react";
-import AuthContext from "./AuthContext";
 import Request from "./Request";
 import SentCard from "./cards/SentCard";
 
@@ -10,8 +9,7 @@ export default function Sent(props) {
   const [createRequest, setCreateRequest] = useState(false);
 
 
-  const cxt = useContext(AuthContext);
-  let email = cxt.email
+  let email = props.email
 
 
   async function getRecordsFromMongo() {
@@ -44,7 +42,7 @@ export default function Sent(props) {
       .map((record) => {
         return (
           <SentCard
-            requester={cxt.email}
+            requester={email}
             id={record.requestee}
             key={record.requestee}
             requestDate={record.requestDate.substring(0,10)}

@@ -1,10 +1,8 @@
 import { useState, useContext, useEffect } from "react"
-import AuthContext from "./AuthContext";
 import GenericButton from "./basic/GeneriButton";
 
 export default function Templates(props) {
 
-  const cxt = useContext(AuthContext)
 
   const [templates, setTemplates] = useState([])
   const [templateIdxSelected, setTemplateIdxSelected] = useState(-1)
@@ -64,7 +62,7 @@ export default function Templates(props) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        sender: cxt.email,
+        sender: props.email,
         recipient: requestEmail,
         fields: fields
       }

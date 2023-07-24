@@ -1,12 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
-import AuthContext from "./AuthContext";
 import InboxCard from "./cards/InboxCard";
 
 
 export default function Inbox(props) {
   const [records, setRecords] = useState([]);
-  const cxt = useContext(AuthContext);
-  let email = cxt.email
+  let email = props.email
   const [profileData, setProfileData] = useState([]);
 
   async function getRecordsFromMongo() {
@@ -56,16 +54,13 @@ export default function Inbox(props) {
       });
   }
 
-  if (cxt.isLoggedIn && cxt.email !== 'undefined') {
-    return (
-      <div className="p-1">
-        <div className="font-weight-bold p-2">
-          You have {records.length} requests to review
-        </div>
-        {getRecordList()}
+  return (
+    <div className="p-1">
+      <div className="font-weight-bold p-2">
+        You have {records.length} requests to review
       </div>
-    );
-  } else {
-    return
-  }
+      {getRecordList()}
+    </div>
+  );
+
 }

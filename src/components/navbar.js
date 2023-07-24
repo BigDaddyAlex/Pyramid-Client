@@ -29,7 +29,7 @@ const Navbar = (props) => {
       cxt.logout()
 
     } else {
-      navigate('login')
+      navigate('auth')
     }
   }
 

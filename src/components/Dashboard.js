@@ -1,17 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import 'react-tabs/style/react-tabs.css';
 import Profile from "./Profile";
 import Sent from "./Sent";
 import Inbox from "./Inbox";
-import AuthContext from "./AuthContext";
 import Templates from "./Templates";
 
-
-
-
 export default function Dashboard(props) {
-  const cxt = useContext(AuthContext);
   const [profileData, setProfileData] = useState({});
   const [activeTab, setActiveTab] = useState('inbox');
 
@@ -26,17 +20,6 @@ export default function Dashboard(props) {
     title: 'Gender'
   }];
 
-  let email = cxt.email
-  let navigate = useNavigate();
-
-
-  useEffect(() => {
-    if (!cxt.isLoggedIn)
-      navigate('/home')
-    return;
-  }, [cxt.isLoggedIn]);
-
-
   useEffect(() => {
     getRecordsFromMongo()
     return;
@@ -49,7 +32,7 @@ export default function Dashboard(props) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        _id: email
+        _id: props.email
       })
     });
     if (!response.ok) {
@@ -67,13 +50,13 @@ export default function Dashboard(props) {
   function getRightSide() {
     switch (activeTab) {
       case 'inbox':
-        return (<Inbox profileData={profileData} />)
+        return (<Inbox profileData={profileData} email={props.email} />)
       case 'sent':
-        return (<Sent profileData={profileData} fieldSearchList={fieldSearchList}/>)
+        return (<Sent profileData={profileData} email={props.email} fieldSearchList={fieldSearchList}/>)
       case 'profile':
-        return (<Profile profileData={profileData} fieldSearchList={fieldSearchList}/>)
+        return (<Profile profileData={profileData} email={props.email} fieldSearchList={fieldSearchList}/>)
       case 'templates':
-        return (<Templates profileData={profileData} fieldSearchList={fieldSearchList}/>)
+        return (<Templates profileData={profileData} email={props.email} fieldSearchList={fieldSearchList}/>)
     }
 
   }

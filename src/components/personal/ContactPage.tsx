@@ -4,21 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import AuthContext from '../AuthContext';
 import { Amplify, API } from 'aws-amplify';
 
-import awsconfig from '../../aws-exports'
-
-Amplify.configure(awsconfig);
-API.configure(awsconfig);
-
-function getData() {
-  const apiName = 'testApi';
-  const path = '/test';
-  const myInit = {
-    headers: {} // OPTIONAL
-  };
-  return API.get(apiName, path, myInit);
-}
-
-
 const ContactPage = () => {
   const cxt = useContext(AuthContext)
   let navigate = useNavigate();
@@ -35,9 +20,8 @@ const ContactPage = () => {
         
           <article className="post" id="index">
             <header>
-              <div className="title">
+              <div className="title text-white">
                 <h3>sqcalexander@gmail.com</h3>
-                <button onClick={()=>getData()}>test</button>
               </div>
             </header>
           </article>

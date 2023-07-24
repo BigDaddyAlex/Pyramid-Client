@@ -5,20 +5,44 @@ const awsmobile = {
     "aws_project_region": "us-west-1",
     "aws_cloud_logic_custom": [
         {
-            "name": "PAPI",
-            "endpoint": "https://qwrd6pmyxe.execute-api.us-west-1.amazonaws.com/staging",
-            "region": "us-west-1"
-        },
-        {
-            "name": "testApi",
-            "endpoint": "https://xvnixaajpl.execute-api.us-west-1.amazonaws.com/staging",
+            "name": "dynamoAPIs",
+            "endpoint": "https://vhzw5gdw66.execute-api.us-west-1.amazonaws.com/staging",
             "region": "us-west-1"
         }
     ],
-    "aws_appsync_graphqlEndpoint": "https://y6gndbbdznglfkyucenlghkt7i.appsync-api.us-west-1.amazonaws.com/graphql",
-    "aws_appsync_region": "us-west-1",
-    "aws_appsync_authenticationType": "API_KEY",
-    "aws_appsync_apiKey": "da2-xftat6srwfbrjm6o7u7xeild3i"
+    "aws_dynamodb_all_tables_region": "us-west-1",
+    "aws_dynamodb_table_schemas": [
+        {
+            "tableName": "users-staging",
+            "region": "us-west-1"
+        }
+    ],
+    "aws_cognito_identity_pool_id": "us-west-1:f86054aa-a82a-496f-9cfb-12f4e64969d5",
+    "aws_cognito_region": "us-west-1",
+    "aws_user_pools_id": "us-west-1_8PvWxbgpe",
+    "aws_user_pools_web_client_id": "3bc80h9klq8si841ic4nba1eaj",
+    "oauth": {},
+    "aws_cognito_username_attributes": [
+        "EMAIL"
+    ],
+    "aws_cognito_social_providers": [],
+    "aws_cognito_signup_attributes": [],
+    "aws_cognito_mfa_configuration": "OFF",
+    "aws_cognito_mfa_types": [
+        "SMS"
+    ],
+    "aws_cognito_password_protection_settings": {
+        "passwordPolicyMinLength": 8,
+        "passwordPolicyCharacters": [
+            "REQUIRES_LOWERCASE",
+            "REQUIRES_NUMBERS",
+            "REQUIRES_SYMBOLS",
+            "REQUIRES_UPPERCASE"
+        ]
+    },
+    "aws_cognito_verification_mechanisms": [
+        "EMAIL"
+    ]
 };
 
 

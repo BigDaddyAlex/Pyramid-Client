@@ -20,7 +20,7 @@ function Home() {
         <div className=" d-flex align-items-center " style={{ height: "40vh" }}>
           <span className="text-center">
             <div class="row text-white">
-              <h3 className='text-white'>Our mission is to eliminate the mannual proccesses involved in the exchange of day-to-day data</h3>
+              <h3 className='text-white'>Let's eliminate the laborious proccesses involved in the exchange of data</h3>
               <div className='text-white'>- our time is better spent doing more productive work</div>
             </div>
           </span>

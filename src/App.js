@@ -1,26 +1,28 @@
+import { withAuthenticator } from '@aws-amplify/ui-react';
+import { Amplify } from 'aws-amplify';
 import axios from 'axios';
-import React, { useCallback, useEffect, useState } from "react";
-import { Route, Routes } from "react-router-dom";
-import AuthContext from './components/AuthContext';
-import Navbar from "./components/navbar";
-import PrivateRoute from "./components/PrivateRoute";
-import Dashboard from "./components/Dashboard";
-import Home from "./components/Home";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap/dist/js/bootstrap.bundle.min";
-import Creator from "./components/personal/Creator";
-import ContactPage from "./components/personal/ContactPage.tsx";
+import React, { useCallback, useEffect, useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import awsExports from './aws-exports';
+import Dashboard from "./components/Dashboard";
+import Home from "./components/Home";
 import LoginPage from './components/LoginPage';
+import PrivateRoute from "./components/PrivateRoute";
+import Search from './components/Search';
 import SignupPage from './components/SignupPage';
 import VerifySignup from './components/VerifySignup';
-import Search from './components/Search';
-import HomeCard from './components/HomeCard.tsx';
+import Navbar from "./components/navbar";
+import ContactPage from "./components/personal/ContactPage.tsx";
+import Creator from "./components/personal/Creator";
+import NewAuth from "./components/NewAuth.tsx"
 
-
+Amplify.configure(awsExports);
 
 let logoutTimer;
 
-const App = () => {
+const App = ({ signOut, user }) => {
 
   const userData = JSON.parse(localStorage.getItem("userData"));
 
@@ -81,21 +83,12 @@ const App = () => {
   }, [login]);
 
   return (
-    <AuthContext.Provider
-      value={{
-        isLoggedIn: !!token,
-        token: token,
-        email: email,
-        login: login,
-        logout: logout
-      }}
-    >
       <div className="App bg-black" style={{ height: 999 }}>
         <Navbar />
         <div className='p-5'>
-          
           <Routes>
             <Route path="" element={<PrivateRoute />}></Route>
+            <Route path="auth" element={<NewAuth />} />
             <Route path="home" element={<Home />} />
             <Route path="creator" element={<Creator />} />
             <Route path="Contact" element={<ContactPage />} />
@@ -106,10 +99,7 @@ const App = () => {
             <Route path="search/*" element={<Search />} />
           </Routes>
         </div>
-
-
       </div>
-    </AuthContext.Provider>
   );
 };
 
