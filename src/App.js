@@ -6,12 +6,10 @@ import { Route, Routes } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
 import Home from "./components/Home";
 import Search from './components/Search';
-import Navbar from "./components/navbar.tsx";
 import ContactPage from "./components/personal/ContactPage.tsx";
 import Creator from "./components/personal/Creator";
 import NewAuth from "./components/NewAuth.tsx"
-
-
+import Navbar from './components/navbar.tsx'
 
 let logoutTimer;
 
@@ -76,19 +74,17 @@ const App = () => {
   }, [login]);
 
   return (
-      <div className="App bg-black" style={{ height: 999 }}>
-        
-
-          <Routes>
-            <Route path="auth" element={<NewAuth />} />
-            <Route path="" element={<Home />} />
-            <Route path="creator" element={<Creator />} />
-            <Route path="Contact" element={<ContactPage />} />
-            <Route path="dashboard/*" element={<Dashboard />} />
-            <Route path="search/*" element={<Search />} />
-          </Routes>
-
-      </div>
+    <div className="App bg-black" style={{ height: 999 }}>
+      <Navbar />
+      <Routes>
+        <Route path="auth" element={<NewAuth />} />
+        <Route path="" element={<Home />} />
+        <Route path="creator" element={<Creator />} />
+        <Route path="Contact" element={<ContactPage />} />
+        <Route path="dashboard/*" element={<Dashboard />} />
+        <Route path="search/*" element={<Search />} />
+      </Routes>
+    </div>
   );
 };
 

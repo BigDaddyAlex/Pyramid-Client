@@ -5,6 +5,7 @@ import Sent from "./Sent";
 import Inbox from "./Inbox";
 import Templates from "./Templates";
 
+
 export default function Dashboard(props) {
   const [profileData, setProfileData] = useState({});
   const [activeTab, setActiveTab] = useState('inbox');

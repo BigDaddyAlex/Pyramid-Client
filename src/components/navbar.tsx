@@ -1,35 +1,31 @@
-import React, { useContext, useState } from 'react';
-import { NavLink, useLocation, useParams, useNavigate } from 'react-router-dom';
-import "bootstrap/dist/css/bootstrap.css";
 import { Amplify } from 'aws-amplify';
+import "bootstrap/dist/css/bootstrap.css";
+import { NavLink, useNavigate } from 'react-router-dom';
 import awsExports from '../aws-exports';
-import { WithAuthenticatorProps } from '@aws-amplify/ui-react';
+import { connect } from "react-redux";
+import * as signinActions from "./../actions/signinActions";
+
+import { RootState } from "./../reducers";
+import { bindActionCreators, Dispatch } from "redux";
 
 Amplify.configure(awsExports);
 
-
-function withRouter(Component) {
-  function ComponentWithRouterProp(props) {
-    let location = useLocation();
-    let params = useParams();
-
-    return (
-      <Component
-        {...props}
-        location={location}
-        params={params}
-      />
-    );
-  }
-  return ComponentWithRouterProp;
-}
-
-const Navbar = ({signOut}: WithAuthenticatorProps) => {
-  const [modal, setModal] = useState(false);
+export const Navbar = (props) => {
   let navigate = useNavigate();
 
   const ModalHandler = () => {
     navigate("auth")
+  }
+
+
+  function getRightButton(){
+    if(props.signinState.signin){
+      return <button className="text-dark btn btn-light btn-sm " onClick={()=>{props.actions.setSigninActions(false)}}>Sign out</button>
+    } else {
+      return <button className="text-dark btn btn-light btn-sm " onClick={ModalHandler} >
+      Log in
+    </button>
+    }
   }
 
   return (
@@ -48,14 +44,26 @@ const Navbar = ({signOut}: WithAuthenticatorProps) => {
           Contact
         </NavLink>
         
-        <button className="text-dark btn btn-light btn-sm " onClick={ModalHandler} >
-          Log in
-        </button>
-        <button onClick={signOut}>Sign out</button>
+        {getRightButton()}
       </nav>
     </div>
   );
 }
 
 
-export default withRouter(Navbar);
+const actions: any = Object.assign({}, signinActions);
+
+function mapStateToProps(state: RootState) {
+  return {
+    signinState: state.signinReducer,
+  };
+}
+function mapDispatchToProps(dispatch: Dispatch) {
+  return {
+    actions: bindActionCreators(actions, dispatch)
+  };
+}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Navbar);
