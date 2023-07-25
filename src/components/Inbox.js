@@ -56,7 +56,7 @@ export default function Inbox(props) {
 
   return (
     <div className="p-1">
-      <div className="font-weight-bold p-2">
+      <div className="font-weight-bold p-2 text-white">
         You have {records.length} requests to review
       </div>
       {getRecordList()}

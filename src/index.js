@@ -14,12 +14,7 @@ const axios = require('axios').default;
 const store = configureStore();
 
 axios.baseURL = process.env.REACT_APP_API_URL + '';
-let userData = JSON.parse(localStorage.getItem("userData"))
-let token
-if (userData) {
-  token = userData.token
-}
-axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
 axios.defaults.headers.post['Content-Type'] = 'application/json'; axios.interceptors.request.use(request => {
   return request;
 },
@@ -34,12 +29,11 @@ axios.interceptors.response.use(response => {
   });
 
 
-const root = createRoot(document.getElementById('root'));
+const root  = createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
     <ConnectedRouter history={history} store={store}>
       <BrowserRouter><App /></BrowserRouter>
-
     </ConnectedRouter>
   </Provider>,
 );

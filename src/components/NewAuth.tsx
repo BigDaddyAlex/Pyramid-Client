@@ -1,11 +1,11 @@
-
-import { Authenticator, Button, Heading, Image, Text, useAuthenticator, useTheme, View } from '@aws-amplify/ui-react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import "bootstrap/dist/js/bootstrap.bundle.min";
+import { Authenticator, Button, Heading, Text, useAuthenticator, useTheme, View } from '@aws-amplify/ui-react';
 import Dashboard from './Dashboard';
+import React from 'react';
 
 
 const components = {
+
+
   Header() {
     const { tokens } = useTheme();
 

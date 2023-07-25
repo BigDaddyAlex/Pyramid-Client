@@ -72,7 +72,7 @@ export default function Sent(props) {
             </button>
           </div>
         </div>
-        <div className="font-weight-bold p-2">
+        <div className="font-weight-bold p-2 text-white">
           You have sent out {records.length} requests for data
         </div>  
         {getRecordList()}

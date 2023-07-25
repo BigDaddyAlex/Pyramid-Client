@@ -1,8 +1,9 @@
-import createHistory from "history/createBrowserHistory";
+import { createBrowserHistory } from "history";
+
 import { routerMiddleware as createRouterMiddleware } from "react-router-redux";
 import { applyMiddleware, compose, createStore } from "redux";
 import { RootState, rootReducer } from "./index";
-export const history = createHistory();
+export const history = createBrowserHistory();
 export const routerMiddleware = createRouterMiddleware(history);
 export function configureStore(initialState?: RootState) {
   // configure middlewares
