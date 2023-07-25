@@ -21,18 +21,19 @@ function Home() {
   return (
     <div>
       <div className=" d-flex justify-content-center">
-        <div className=" d-flex align-items-center " style={{ height: "60vh" }}>
+        <div className=" d-flex align-items-center " style={{ height: "70vh" }}>
           <span className="text-center">
             <div className="row text-white">
+            <br />
+            <br />
+            
               <h3 className='text-white'>Let's eliminate the laborious proccesses involved in the exchange of data</h3>
               <div className='text-white'>- our time is better spent doing more productive work</div>
             </div>
           </span>
         </div>
       </div>
-      <br />
-      <br />
-      <br />
+
       <div className='row'>
         <h5 className='text-white'>Check out some of the most popular templates below</h5>
 
