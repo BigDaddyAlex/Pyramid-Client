@@ -1,4 +1,4 @@
-import { Amplify } from 'aws-amplify';
+import { Amplify, Auth } from 'aws-amplify';
 import "bootstrap/dist/css/bootstrap.css";
 import { NavLink, useNavigate } from 'react-router-dom';
 import awsExports from '../aws-exports';
@@ -19,13 +19,22 @@ export const Navbar = (props) => {
     navigate("auth")
   }
 
+//   async function isSignedin() {
+//     try {
+//         await Auth.currentAuthenticatedUser();
+//         return true;
+//     } catch {
+//         return false;
+//     }
+// }
+
 
   function getRightButton() {
-    if (props.signinState.signin) {
+    if (props.signOut) {
       return <Button variation="primary"
         loadingText=""
         size="small"
-        ariaLabel="" onClick={() => { props.actions.setSigninActions(false) }}>Sign out</Button>
+        ariaLabel="" onClick={props.signOut }>Sign out</Button>
     } else {
       return <Button variation="primary"
         loadingText=""
@@ -42,7 +51,7 @@ export const Navbar = (props) => {
         <NavLink className="navbar-brand" to="/">
           <img className="img-fluid " style={{ height: 35 }} src="/logo-transparent-bg.png" />
         </NavLink>
-        <NavLink className="navbar-nav h5 text-white text-decoration-none" to="/">
+        <NavLink className="navbar-nav h5 text-white text-decoration-none" to="">
           Home
         </NavLink>
         <NavLink className="navbar-nav h5 text-white text-decoration-none " to="/creator">
@@ -51,8 +60,6 @@ export const Navbar = (props) => {
         <NavLink className="navbar-nav h5 text-white text-decoration-none" to="/Contact">
           Contact
         </NavLink>
-
-
         {getRightButton()}
       </nav>
     </div>

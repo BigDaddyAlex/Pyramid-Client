@@ -18,6 +18,7 @@ function Dashboard(props) {
   const [profileData, setProfileData] = useState({});
   const [activeTab, setActiveTab] = useState('inbox');
 
+
   const fieldSearchList = [{
     title: 'First Name'
   },
@@ -33,13 +34,6 @@ function Dashboard(props) {
     getRecordsFromMongo()
     return;
   }, []);
-
-  useEffect(() => {
-    if (!props.signinState.signin) {
-      props.signOut()
-      props.actions.setSigninActions(true)
-    } 
-  }, [props.signinState.signin]);
 
   async function getRecordsFromMongo() {
     const response = await fetch(process.env.REACT_APP_API_URL + '/record', {
@@ -95,7 +89,7 @@ function Dashboard(props) {
       <div className="flex-grow-1">
         {getRightSide()}
       </div>
-
+      
     </div>
   );
 }

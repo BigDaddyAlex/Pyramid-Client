@@ -1,17 +1,12 @@
 import { Authenticator, Button, Heading, Text, useAuthenticator, useTheme, View } from '@aws-amplify/ui-react';
 import Dashboard from './Dashboard';
-import React from 'react';
-
+import Navbar from './navbar';
 
 const components = {
-
-
   Header() {
     const { tokens } = useTheme();
-
     return (
       <View textAlign="center" padding={tokens.space.large}>
-       
       </View>
     );
   },
@@ -234,10 +229,15 @@ const NewAuth = () => {
   return (
     <div className='bg-black'>
       <Authenticator formFields={formFields} components={components}>
-      {({ signOut, user }) => (
-          <Dashboard email={user?.attributes?.email} signOut={signOut}/>
-      )}
-    </Authenticator>
+
+        {({ signOut, user }) => (
+          <div>
+            <Navbar signOut={signOut}></Navbar>
+            <Dashboard email={user?.attributes?.email} signOut={signOut} />
+          </div>
+
+        )}
+      </Authenticator>
     </div>
   );
 }

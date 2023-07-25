@@ -10,22 +10,22 @@ import Search from './components/Search';
 import Navbar from './components/navbar';
 import ContactPage from "./components/personal/ContactPage";
 import Creator from "./components/personal/Creator";
+import Unauth from './components/unauth';
 
 
 const App = () => {
   return (
     <div className="App bg-black" style={{ height: 999 }}>
-      <Navbar />
-      <div className="px-5">
-        <Routes>
-          <Route path="auth" element={<NewAuth />} />
+      <Routes>
+        <Route path="auth" element={<NewAuth />} />
+        <Route path="" element={<Unauth />} >
           <Route path="" element={<Home />} />
           <Route path="creator" element={<Creator />} />
           <Route path="Contact" element={<ContactPage />} />
-          <Route path="dashboard/*" element={<Dashboard />} />
-          <Route path="search/*" element={<Search />} />
-        </Routes>
-      </div>
+        </Route>
+        <Route path="dashboard/*" element={<Dashboard />} />
+        <Route path="search/*" element={<Search />} />
+      </Routes>
 
     </div>
   );
