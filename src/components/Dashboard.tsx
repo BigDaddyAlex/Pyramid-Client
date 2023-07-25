@@ -1,12 +1,20 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import 'react-tabs/style/react-tabs.css';
+import { Dispatch, bindActionCreators } from "redux";
+import Inbox from "./Inbox";
 import Profile from "./Profile";
 import Sent from "./Sent";
-import Inbox from "./Inbox";
 import Templates from "./Templates";
 
+import * as signinActions from "./../actions/signinActions";
 
-export default function Dashboard(props) {
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/js/bootstrap.bundle.min";
+import { RootState } from "./../reducers";
+import { connect } from "react-redux";
+
+function Dashboard(props) {
   const [profileData, setProfileData] = useState({});
   const [activeTab, setActiveTab] = useState('inbox');
 
@@ -25,6 +33,13 @@ export default function Dashboard(props) {
     getRecordsFromMongo()
     return;
   }, []);
+
+  useEffect(() => {
+    if (!props.signinState.signin) {
+      props.signOut()
+      props.actions.setSigninActions(true)
+    } 
+  }, [props.signinState.signin]);
 
   async function getRecordsFromMongo() {
     const response = await fetch(process.env.REACT_APP_API_URL + '/record', {
@@ -86,3 +101,20 @@ export default function Dashboard(props) {
 }
 
 
+const actions: any = Object.assign({}, signinActions);
+
+function mapStateToProps(state: RootState) {
+  return {
+    signinState: state.signinReducer
+  };
+}
+function mapDispatchToProps(dispatch: Dispatch) {
+  return {
+    actions: bindActionCreators(actions, dispatch)
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Dashboard);

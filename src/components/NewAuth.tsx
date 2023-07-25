@@ -1,71 +1,245 @@
-import { bindActionCreators, Dispatch } from "redux";
-import { connect } from "react-redux";
-import React, { useCallback, useEffect, useState } from "react";
 
-import { withAuthenticator } from '@aws-amplify/ui-react';
-import { Amplify, Auth } from 'aws-amplify';
-import { SigninModel } from "../interfaces/SigninModel";
-import * as signinActions from "./../actions/signinActions";
-
-import awsExports from '../aws-exports';
-
+import { Authenticator, Button, Heading, Image, Text, useAuthenticator, useTheme, View } from '@aws-amplify/ui-react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import Dashboard from './Dashboard';
-import Navbar from "./navbar"
-import { RootState } from "./../reducers";
-
-Amplify.configure(awsExports);
 
 
-interface Props {
-  signinState: SigninModel;
-  actions: any;
-}
+const components = {
+  Header() {
+    const { tokens } = useTheme();
 
-const NewAuth = (props) => {
+    return (
+      <View textAlign="center" padding={tokens.space.large}>
+       
+      </View>
+    );
+  },
 
-console.log(props.signinState.signin)
-  useEffect(() => {
-    if (!props.signinState.signin) {
-      props.signOut()
-      props.actions.setSigninActions(true)
-    } 
-  }, [props.signinState.signin]);
+  Footer() {
+    const { tokens } = useTheme();
 
-  async function test() {
-    try {
-      const user = await Auth.currentAuthenticatedUser({
-        bypassCache: false // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
-      });
-      // console.log("sss")
-      // console.log(user)
-    } catch (err) {
-      // console.log(err);
-    }
-  }
-  test()
+    return (
+      <View textAlign="center" padding={tokens.space.large}>
+        <Text color={tokens.colors.neutral[80]}>
+          &copy; All Rights Reserved
+        </Text>
+      </View>
+    );
+  },
+
+  SignIn: {
+    Header() {
+      const { tokens } = useTheme();
+
+      return (
+        <Heading
+          padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
+          level={3}
+        >
+          Sign in to your account
+        </Heading>
+      );
+    },
+    Footer() {
+      const { toResetPassword } = useAuthenticator();
+
+      return (
+        <View textAlign="center">
+          <Button
+            fontWeight="normal"
+            onClick={toResetPassword}
+            size="small"
+            variation="link"
+          >
+            Reset Password
+          </Button>
+        </View>
+      );
+    },
+  },
+
+  SignUp: {
+    Header() {
+      const { tokens } = useTheme();
+
+      return (
+        <Heading
+          padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
+          level={3}
+        >
+          Create a new account
+        </Heading>
+      );
+    },
+    Footer() {
+      const { toSignIn } = useAuthenticator();
+
+      return (
+        <View textAlign="center">
+          <Button
+            fontWeight="normal"
+            onClick={toSignIn}
+            size="small"
+            variation="link"
+          >
+            Back to Sign In
+          </Button>
+        </View>
+      );
+    },
+  },
+  ConfirmSignUp: {
+    Header() {
+      const { tokens } = useTheme();
+      return (
+        <Heading
+          padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
+          level={3}
+        >
+          Enter Information:
+        </Heading>
+      );
+    },
+    Footer() {
+      return <Text>Footer Information</Text>;
+    },
+  },
+  SetupTOTP: {
+    Header() {
+      const { tokens } = useTheme();
+      return (
+        <Heading
+          padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
+          level={3}
+        >
+          Enter Information:
+        </Heading>
+      );
+    },
+    Footer() {
+      return <Text>Footer Information</Text>;
+    },
+  },
+  ConfirmSignIn: {
+    Header() {
+      const { tokens } = useTheme();
+      return (
+        <Heading
+          padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
+          level={3}
+        >
+          Enter Information:
+        </Heading>
+      );
+    },
+    Footer() {
+      return <Text>Footer Information</Text>;
+    },
+  },
+  ResetPassword: {
+    Header() {
+      const { tokens } = useTheme();
+      return (
+        <Heading
+          padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
+          level={3}
+        >
+          Enter Information:
+        </Heading>
+      );
+    },
+    Footer() {
+      return <Text>Footer Information</Text>;
+    },
+  },
+  ConfirmResetPassword: {
+    Header() {
+      const { tokens } = useTheme();
+      return (
+        <Heading
+          padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
+          level={3}
+        >
+          Enter Information:
+        </Heading>
+      );
+    },
+    Footer() {
+      return <Text>Footer Information</Text>;
+    },
+  },
+};
+
+const formFields = {
+  signIn: {
+    username: {
+      placeholder: 'Enter your email',
+    },
+  },
+  signUp: {
+    password: {
+      label: 'Password:',
+      placeholder: 'Enter your Password:',
+      isRequired: false,
+      order: 2,
+    },
+    confirm_password: {
+      label: 'Confirm Password:',
+      order: 1,
+    },
+  },
+  forceNewPassword: {
+    password: {
+      placeholder: 'Enter your Password:',
+    },
+  },
+  resetPassword: {
+    username: {
+      placeholder: 'Enter your email:',
+    },
+  },
+  confirmResetPassword: {
+    confirmation_code: {
+      placeholder: 'Enter your Confirmation Code:',
+      label: 'New Label',
+      isRequired: false,
+    },
+    confirm_password: {
+      placeholder: 'Enter your Password Please:',
+    },
+  },
+  setupTOTP: {
+    QR: {
+      totpIssuer: 'test issuer',
+      totpUsername: 'amplify_qr_test_user',
+    },
+    confirmation_code: {
+      label: 'New Label',
+      placeholder: 'Enter your Confirmation Code:',
+      isRequired: false,
+    },
+  },
+  confirmSignIn: {
+    confirmation_code: {
+      label: 'New Label',
+      placeholder: 'Enter your Confirmation Code:',
+      isRequired: false,
+    },
+  },
+};
+
+
+const NewAuth = () => {
   return (
-    <div>
-      
-      <Dashboard email={props.user?.attributes?.email} />
+    <div className='bg-black'>
+      <Authenticator formFields={formFields} components={components}>
+      {({ signOut, user }) => (
+          <Dashboard email={user?.attributes?.email} signOut={signOut}/>
+      )}
+    </Authenticator>
     </div>
   );
 }
-const actions: any = Object.assign({}, signinActions);
 
-function mapStateToProps(state: RootState) {
-  console.log(state)
-  return {
-    signinState: state.signinReducer
-  };
-}
-function mapDispatchToProps(dispatch: Dispatch) {
-  return {
-    actions: bindActionCreators(actions, dispatch)
-  };
-}
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withAuthenticator(NewAuth));
+export default NewAuth;

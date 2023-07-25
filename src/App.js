@@ -10,6 +10,8 @@ import ContactPage from "./components/personal/ContactPage.tsx";
 import Creator from "./components/personal/Creator";
 import NewAuth from "./components/NewAuth.tsx"
 import Navbar from './components/navbar.tsx'
+import '@aws-amplify/ui-react/styles.css';
+
 
 let logoutTimer;
 

@@ -64,6 +64,8 @@ export default function Profile(props) {
     return <Create fieldSearchList={props.fieldSearchList}/>
   } else if(subPage==="edit") {
     return <Edit />
+  } else {
+    return <div></div>
   }
 
 }

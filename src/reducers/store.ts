@@ -1,8 +1,7 @@
-import { createStore, applyMiddleware, compose } from "redux";
-import { createEpicMiddleware } from "redux-observable";
-import { routerMiddleware as createRouterMiddleware } from "react-router-redux";
 import createHistory from "history/createBrowserHistory";
-import { rootReducer, RootState } from "./index";
+import { routerMiddleware as createRouterMiddleware } from "react-router-redux";
+import { applyMiddleware, compose, createStore } from "redux";
+import { RootState, rootReducer } from "./index";
 export const history = createHistory();
 export const routerMiddleware = createRouterMiddleware(history);
 export function configureStore(initialState?: RootState) {

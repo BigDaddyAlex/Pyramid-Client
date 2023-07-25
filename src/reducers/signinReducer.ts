@@ -1,6 +1,5 @@
-import { combineReducers } from "redux";
-import { handleActions, Action } from "redux-actions";
-import { SigninModel, SigninPayload} from "../interfaces/SigninModel"
+import { Action, handleActions } from "redux-actions";
+import { SigninModel } from "../interfaces/SigninModel";
 
 import * as SigninActions from "../actions/signinActions";
 export type State = {

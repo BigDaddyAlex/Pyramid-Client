@@ -1,6 +1,6 @@
-import { combineReducers } from "redux";
 import { routerReducer as router, RouterState } from "react-router-redux";
-import { signInReducer, State as SigninState} from "./signinReducer";
+import { combineReducers } from "redux";
+import { signInReducer, State as SigninState } from "./signinReducer";
 
 interface StoreEnhancerState {}
 export interface RootState extends StoreEnhancerState {
