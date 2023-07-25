@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Creator = () => {
-
   return (
     <div className=" d-flex justify-content-center ">
       <div className=" d-flex align-items-center " style={{ height: "85vh" }}>

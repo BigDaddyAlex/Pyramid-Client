@@ -9,19 +9,21 @@ export default function Templates(props) {
   const [requestEmail, setRequestEmail] = useState("")
 
   function getTemplates() {
-    fetch(process.env.REACT_APP_API_URL + '/templates', {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      }
-    }
-    ).then(response => response.json())
-      .then(data => setTemplates(data))
-      .catch(e => {
-        console.log(e);
-      })
+    console.log("fetch")
+    // fetch(process.env.REACT_APP_API_URL + '/templates', {
+    //   method: "GET",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   }
+    // }
+    // ).then(response => response.json())
+    //   .then(data => setTemplates(data))
+    //   .catch(e => {
+    //     console.log(e);
+    //   })
 
   }
+
   useEffect(() => {
     getTemplates()
     return

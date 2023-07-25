@@ -1,20 +1,41 @@
-import React from 'react';
 
-import HomeCard from './cards/HomeCard'
-import { Collection, Button, Heading, Card, Image, Flex, View, Badge, Divider } from '@aws-amplify/ui-react';
+import { Collection, Divider } from '@aws-amplify/ui-react';
+import { useEffect, useState } from 'react';
+import NewCard from "./cards/newCard";
 
-
-function Home() {
-
+export default () => {
+  const [templates, setTemplates] = useState([])
+  function getTemplates() {
+    fetch(process.env.REACT_APP_API_URL + '/templates', {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    }
+    ).then(response => response.json())
+      .then(data => setTemplates(data))
+      .catch(e => {
+        console.log(e);
+      })
+      return ""
+  }
+  useEffect(() => {
+    getTemplates()
+    return
+  }, [])
+  
+  console.log(templates)
 
   const items = [
     {
-      title: 'A form that hospitals use to register new patients',
+      title: 'Patient Intake',
+      description: 'A form that hospitals use to register new patients',
       badges: ['Hospital', 'Verified'],
     },
     {
-      title: 'A form insurance companies use to collect data about claims',
-      badges: ['Insurance', 'Verified'],
+      title: 'Insurance',
+      description: 'A form insurance companies use to collect data about claims',
+      badges: ['Insurance'],
     },
   ];
 
@@ -24,9 +45,8 @@ function Home() {
         <div className=" d-flex align-items-center " style={{ height: "70vh" }}>
           <span className="text-center">
             <div className="row text-white">
-            <br />
-            <br />
-            
+              <br />
+              <br />
               <h3 className='text-white'>Let's eliminate the laborious proccesses involved in the exchange of data</h3>
               <div className='text-white'>- our time is better spent doing more productive work</div>
             </div>
@@ -39,50 +59,22 @@ function Home() {
 
         <Divider orientation="horizontal" />
         <br />
-        
+
       </div>
-    <br />
+      <br />
       <Collection
-        items={items}
+        items={templates}
         type="list"
         direction="row"
         gap="20px"
-        wrap="nowrap"
+        wrap="wrap"
       >
         {(item, index) => (
-          <Card
-            key={index}
-            borderRadius="medium"
-            maxWidth="20rem"
-            variation="outlined"
-          >
-            <h5>Patient Intake</h5>
-            <View padding="xs">
-              <Flex>
-                {item.badges.map((badge) => (
-                  <Badge
-                    key={badge}
-                    backgroundColor={
-                      badge === 'Waterfront' ? 'blue.40'
-                        : badge === 'Mountain' ? 'green.40' : 'yellow.40'}
-                  >
-                    {badge}
-                  </Badge>
-                ))}
-              </Flex>
-              <Divider padding="xs" />
-              <Heading padding="medium">{item.title}</Heading>
-              <Button variation="primary" isFullWidth>
-                Try it
-              </Button>
-            </View>
-          </Card>
+          <NewCard index={index} item={item} />
         )}
       </Collection>
+      
     </div>
-
-
   );
 }
 
-export default Home;
