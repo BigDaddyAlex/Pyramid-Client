@@ -8,7 +8,6 @@ import Templates from "./Templates";
 
 import * as signinActions from "./../actions/signinActions";
 
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import { RootState } from "./../reducers";
@@ -89,11 +88,9 @@ function Dashboard(props) {
       <div className="flex-grow-1">
         {getRightSide()}
       </div>
-      
     </div>
   );
 }
-
 
 const actions: any = Object.assign({}, signinActions);
 

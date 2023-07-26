@@ -3,24 +3,23 @@ import GenericButton from "./basic/GeneriButton";
 
 export default function Templates(props) {
 
-
   const [templates, setTemplates] = useState([])
   const [templateIdxSelected, setTemplateIdxSelected] = useState(-1)
   const [requestEmail, setRequestEmail] = useState("")
 
   function getTemplates() {
-    console.log("fetch")
-    // fetch(process.env.REACT_APP_API_URL + '/templates', {
-    //   method: "GET",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   }
-    // }
-    // ).then(response => response.json())
-    //   .then(data => setTemplates(data))
-    //   .catch(e => {
-    //     console.log(e);
-    //   })
+    
+    fetch(process.env.REACT_APP_API_URL + '/templates', {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    }
+    ).then(response => response.json())
+      .then(data => setTemplates(data))
+      .catch(e => {
+        console.log(e);
+      })
 
   }
 
